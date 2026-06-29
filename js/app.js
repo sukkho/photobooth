@@ -59,6 +59,8 @@ document.querySelectorAll('.layout-btn').forEach(btn => {
     MAX_SHOTS = LAYOUTS[btn.dataset.layout].photoCount;
     renderStrip(shots);
     updateUI();
+    // toggle wide layout for grid
+    document.querySelector('.layout').classList.toggle('grid-mode', btn.dataset.layout === 'grid');
   });
 });
 
