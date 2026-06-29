@@ -72,21 +72,19 @@ document.querySelectorAll('.layout-btn').forEach(btn => {
  * @returns {HTMLCanvasElement}
  */
 function captureFrame() {
-  const l   = LAYOUTS[activeLayout];
+  const CAP_W = 640, CAP_H = 480; // always capture 4:3
   const c   = document.createElement('canvas');
-  c.width   = l.frameW;
-  c.height  = l.frameH;
+  c.width   = CAP_W;
+  c.height  = CAP_H;
   const ctx = c.getContext('2d');
 
-  // Mirror horizontally (selfie feel)
   ctx.save();
-  ctx.translate(l.frameW, 0);
+  ctx.translate(CAP_W, 0);
   ctx.scale(-1, 1);
-  ctx.drawImage(video, 0, 0, l.frameW, l.frameH);
+  ctx.drawImage(video, 0, 0, CAP_W, CAP_H);
   ctx.restore();
 
-  // Apply pixel filter
-  applyFilter(ctx, l.frameW, l.frameH, activeFilter);
+  applyFilter(ctx, CAP_W, CAP_H, activeFilter);
   return c;
 }
 
@@ -150,6 +148,11 @@ resetBtn.addEventListener('click', () => {
   shootBtn.textContent = 'take photo 📷';
   setStatus('camera ready — take up to 4 photos.');
   shotCountEl.textContent = '';
+
+  // reset layout picker
+  document.getElementById('layout-picker').style.display = 'block';
+  document.getElementById('strip-editor').style.display = 'none';
+  document.querySelector('.layout').classList.remove('grid-mode');
 });
 
 // ─── UI state sync ─────────────────────────────────────────
