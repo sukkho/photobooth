@@ -216,3 +216,81 @@ video, #preview-canvas {
   .strip-section { width: 100%; }
   .countdown { font-size: 56px; }
 }
+
+/* ─── Layout picker ──────────────────────────────────────── */
+.layout-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.layout-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #d5d5d3;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.layout-btn.active {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+/* ─── Color row ──────────────────────────────────────────── */
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#color-picker {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d5d5d3;
+  border-radius: 8px;
+  padding: 2px;
+  cursor: pointer;
+  background: none;
+}
+
+.color-swatches {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  outline: 1px solid #d5d5d3;
+  transition: border-color 0.12s;
+}
+
+.color-btn.active {
+  border-color: #1a1a1a;
+}
+
+/* ─── Date toggle ────────────────────────────────────────── */
+.date-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #444;
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+
+.date-toggle input { cursor: pointer; }

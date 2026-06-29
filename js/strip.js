@@ -1,74 +1,136 @@
 /**
- * strip.js
- * Builds and renders the photo-strip canvas.
- *
- * Strip layout (all sizes in px):
- *   Width  : STRIP_W  (240)
- *   Padding: PAD      (12) — around edges and between frames
- *   Frame  : FRAME_W × FRAME_H  (216 × 162)
- *   4 frames + padding + footer = STRIP_H
+ * strip.js — 4 layouts, color picker, date stamp
  */
 
-const STRIP_W  = 240;
-const PAD      = 12;
-const FRAME_W  = STRIP_W - PAD * 2;        // 216
-const FRAME_H  = Math.round(FRAME_W * 3 / 4); // 162 (4:3)
-const FOOTER_H = 28;
-const STRIP_H  = PAD + (FRAME_H + PAD) * 4 + FOOTER_H;
+const LAYOUTS = {
+  classic: {
+    label: 'Classic 4',
+    photoCount: 4,
+    stripW: 240, stripH: 908,
+    frameW: 216, frameH: 162,
+    photos: [
+      { x: 12, y: 12  },
+      { x: 12, y: 186 },
+      { x: 12, y: 360 },
+      { x: 12, y: 534 },
+    ],
+    footerY: 870,
+  },
+  short: {
+    label: 'Short 3',
+    photoCount: 3,
+    stripW: 240, stripH: 690,
+    frameW: 216, frameH: 162,
+    photos: [
+      { x: 12, y: 12  },
+      { x: 12, y: 186 },
+      { x: 12, y: 360 },
+    ],
+    footerY: 660,
+  },
+  polaroid: {
+    label: 'Polaroid',
+    photoCount: 1,
+    stripW: 300, stripH: 380,
+    frameW: 260, frameH: 260,
+    photos: [
+      { x: 20, y: 20 },
+    ],
+    footerY: 348,
+  },
+  grid: {
+    label: 'Grid 2×2',
+    photoCount: 4,
+    stripW: 480, stripH: 504,
+    frameW: 222, frameH: 222,
+    photos: [
+      { x: 12,  y: 12  },
+      { x: 246, y: 12  },
+      { x: 12,  y: 246 },
+      { x: 246, y: 246 },
+    ],
+    footerY: 482,
+  },
+};
 
-/** @type {HTMLCanvasElement} */
+let activeLayout = 'classic';
+let stripColor   = '#111111';
+let showDate     = false;
+
 const stripCanvas = document.getElementById('strip-canvas');
-stripCanvas.width  = STRIP_W;
-stripCanvas.height = STRIP_H;
 
-/**
- * Re-render the strip canvas from an array of captured frame canvases.
- * Empty slots are drawn as placeholder boxes.
- * @param {HTMLCanvasElement[]} shots  — up to 4 items
- */
+function resizeCanvas() {
+  const l = LAYOUTS[activeLayout];
+  stripCanvas.width  = l.stripW;
+  stripCanvas.height = l.stripH;
+}
+
 function renderStrip(shots) {
+  const l   = LAYOUTS[activeLayout];
   const ctx = stripCanvas.getContext('2d');
 
   // Background
-  ctx.fillStyle = '#111111';
-  ctx.fillRect(0, 0, STRIP_W, STRIP_H);
+  ctx.fillStyle = stripColor;
+  ctx.fillRect(0, 0, l.stripW, l.stripH);
 
-  for (let i = 0; i < 4; i++) {
-    const x = PAD;
-    const y = PAD + i * (FRAME_H + PAD);
-
+  // Photos / placeholders
+  l.photos.forEach((pos, i) => {
     if (shots[i]) {
-      ctx.drawImage(shots[i], x, y, FRAME_W, FRAME_H);
+      ctx.drawImage(shots[i], pos.x, pos.y, l.frameW, l.frameH);
     } else {
-      // Placeholder
-      ctx.fillStyle = '#2a2a2a';
-      ctx.fillRect(x, y, FRAME_W, FRAME_H);
-      ctx.fillStyle = '#555';
+      // Placeholder box
+      const isDark = isColorDark(stripColor);
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+      ctx.fillRect(pos.x, pos.y, l.frameW, l.frameH);
+      ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
       ctx.font = '13px monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(`Photo ${i + 1}`, x + FRAME_W / 2, y + FRAME_H / 2);
+      ctx.fillText(`Photo ${i + 1}`, pos.x + l.frameW / 2, pos.y + l.frameH / 2);
     }
-  }
+  });
 
-  // Footer label
-  ctx.fillStyle = '#666';
-  ctx.font = '11px monospace';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  const footerY = PAD + 4 * (FRAME_H + PAD) + FOOTER_H / 2;
-  ctx.fillText('✦ PHOTOBOOTH ✦', STRIP_W / 2, footerY);
+  // Date stamp
+  if (showDate) {
+    const dateStr = new Date().toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    }).toUpperCase();
+    const isDark = isColorDark(stripColor);
+    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.4)';
+    ctx.font = 'italic 11px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(dateStr, l.stripW / 2, l.footerY);
+  }
 }
 
-/**
- * Trigger a PNG download of the current strip canvas.
- */
+// Helper — decides whether to use light or dark text on top of the chosen color
+function isColorDark(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return (0.299 * r + 0.587 * g + 0.114 * b) < 128;
+}
+
+function setLayout(key) {
+  activeLayout = key;
+  resizeCanvas();
+}
+
+function setStripColor(color) {
+  stripColor = color;
+}
+
+function setShowDate(val) {
+  showDate = val;
+}
+
 function downloadStrip() {
   const link = document.createElement('a');
-  link.download = `photobooth-strip-${Date.now()}.png`;
+  link.download = `photobooth-${activeLayout}-${Date.now()}.png`;
   link.href = stripCanvas.toDataURL('image/png');
   link.click();
 }
 
-// Draw the empty strip on load
+resizeCanvas();
 renderStrip([]);

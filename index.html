@@ -58,8 +58,45 @@
 
     <!-- Right: live strip preview -->
     <section class="strip-section">
-      <p class="strip-label">Strip preview</p>
+
+      <!-- Step 1: layout picker (hidden once shooting starts) -->
+      <div id="layout-picker">
+        <p class="strip-label">1. Choose style</p>
+        <div class="layout-btns">
+          <button class="layout-btn active" data-layout="classic">Classic 4</button>
+          <button class="layout-btn" data-layout="short">Short 3</button>
+          <button class="layout-btn" data-layout="polaroid">Polaroid</button>
+          <button class="layout-btn" data-layout="grid">Grid 2×2</button>
+        </div>
+      </div>
+
+      <!-- Step 2: strip editor (shown after all photos taken) -->
+      <div id="strip-editor" style="display:none">
+        <p class="strip-label">2. Strip color</p>
+        <div class="color-row">
+          <input type="color" id="color-picker" value="#111111" title="Pick a color" />
+          <div class="color-swatches">
+            <button class="color-btn active" data-color="#111111" style="background:#111111"></button>
+            <button class="color-btn" data-color="#ffffff"       style="background:#ffffff"></button>
+            <button class="color-btn" data-color="#f4c2c2"       style="background:#f4c2c2"></button>
+            <button class="color-btn" data-color="#c2d4f4"       style="background:#c2d4f4"></button>
+            <button class="color-btn" data-color="#c2f4d0"       style="background:#c2f4d0"></button>
+            <button class="color-btn" data-color="#f4ecc2"       style="background:#f4ecc2"></button>
+            <button class="color-btn" data-color="#e8c2f4"       style="background:#e8c2f4"></button>
+            <button class="color-btn" data-color="#1a1a2e"       style="background:#1a1a2e"></button>
+          </div>
+        </div>
+
+        <label class="date-toggle">
+          <input type="checkbox" id="date-toggle" />
+          Add date stamp
+        </label>
+      </div>
+
+      <!-- Strip preview (always visible) -->
+      <p class="strip-label" style="margin-top:1rem">Preview</p>
       <canvas id="strip-canvas"></canvas>
+
     </section>
 
   </main>

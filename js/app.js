@@ -21,7 +21,7 @@ const postControls = document.getElementById('post-controls');
 let shots        = [];        // array of captured frame canvases (max 4)
 let activeFilter = 'none';
 let isShooting   = false;
-const MAX_SHOTS  = 4;
+const MAX_SHOTS  = 4;let MAX_SHOTS = LAYOUTS[activeLayout].photoCount;
 
 // ─── Camera setup ──────────────────────────────────────────
 async function startCamera() {
@@ -47,6 +47,18 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
     video.style.filter = FILTER_CSS[activeFilter];
+  });
+});
+
+document.querySelectorAll('.layout-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (shots.length > 0) return;
+    document.querySelectorAll('.layout-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    setLayout(btn.dataset.layout);
+    MAX_SHOTS = LAYOUTS[btn.dataset.layout].photoCount;
+    renderStrip(shots);
+    updateUI();
   });
 });
 
@@ -162,11 +174,38 @@ function updateUI() {
 
   // Post-controls
   postControls.style.display = done ? 'flex' : 'none';
+
+  document.getElementById('layout-picker').style.display = shots.length > 0 ? 'none' : 'block';
+  document.getElementById('strip-editor').style.display  = done ? 'block' : 'none';
 }
 
 function setStatus(msg) {
   statusEl.textContent = msg;
 }
+
+// Color swatches
+document.querySelectorAll('.color-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    setStripColor(btn.dataset.color);
+    document.getElementById('color-picker').value = btn.dataset.color;
+    renderStrip(shots);
+  });
+});
+
+// Free color picker
+document.getElementById('color-picker').addEventListener('input', (e) => {
+  document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+  setStripColor(e.target.value);
+  renderStrip(shots);
+});
+
+// Date stamp toggle
+document.getElementById('date-toggle').addEventListener('change', (e) => {
+  setShowDate(e.target.checked);
+  renderStrip(shots);
+});
 
 // ─── Boot ──────────────────────────────────────────────────
 startCamera();
