@@ -178,7 +178,7 @@ video, #preview-canvas {
 .btn-print:hover, .btn-reset:hover { background: #f5f5f3; }
 
 /* ─── Strip section ──────────────────────────────────────── */
-.strip-section { flex: 0 0 340px; }
+.strip-section { flex: 0 0 200px; }
 
 .strip-label {
   font-size: 11px;

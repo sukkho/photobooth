@@ -33,9 +33,9 @@ async function startCamera() {
     video.srcObject = stream;
     video.style.filter = FILTER_CSS[activeFilter];
     shootBtn.disabled = false;
-    setStatus('Camera ready — take up to 4 photos.');
+    setStatus('camera ready — take up to 4 photos.');
   } catch (err) {
-    setStatus('⚠ Camera access denied. Allow camera permission and reload.');
+    setStatus('⚠ camera access denied. allow camera permission and reload.');
     console.error('getUserMedia error:', err);
   }
 }
@@ -132,8 +132,8 @@ resetBtn.addEventListener('click', () => {
   postControls.style.display = 'none';
   retakeBtn.style.display = 'none';
   shootBtn.disabled = false;
-  shootBtn.textContent = '📷 Take photo';
-  setStatus('Camera ready — take up to 4 photos.');
+  shootBtn.textContent = 'take photo 📷';
+  setStatus('camera ready — take up to 4 photos.');
   shotCountEl.textContent = '';
 });
 
@@ -150,12 +150,12 @@ function updateUI() {
 
   // Status message
   setStatus(done
-    ? 'All done! Download or print your strip below.'
-    : 'Nice! Take the next one whenever you\'re ready.');
+    ? 'all done! download or print your strip below.'
+    : 'nice! take the next one whenever you\'re ready.');
 
   // Shoot button
   shootBtn.disabled  = done;
-  shootBtn.textContent = done ? '✓ Strip complete' : '📷 Take photo';
+  shootBtn.textContent = done ? '✓ Strip complete' : 'take photo 📷';
 
   // Retake button (available after at least 1 shot, before strip is full)
   retakeBtn.style.display = count > 0 && !done ? 'block' : 'none';
