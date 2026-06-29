@@ -24,7 +24,7 @@ body {
 /* ─── Layout ────────────────────────────────────────────── */
 .layout {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /*locks camera and strip in a row*/
   gap: 1.5rem;
   padding: 1.5rem;
   max-width: 860px;
@@ -178,7 +178,7 @@ video, #preview-canvas {
 .btn-print:hover, .btn-reset:hover { background: #f5f5f3; }
 
 /* ─── Strip section ──────────────────────────────────────── */
-.strip-section { flex: 1 1 auto; }
+.strip-section { flex: 0 0 340px; }
 
 .strip-label {
   font-size: 11px;
