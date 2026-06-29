@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Photobooth</title>
+  <title>photobooth</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <header class="header">
-    <span class="logo">📸 Photobooth</span>
+    <span class="logo">photobooth 📸</span>
     <span class="subtitle">4 shots · 1 strip</span>
   </header>
 
@@ -27,31 +27,31 @@
 
       <!-- Filter selector -->
       <div class="filter-row">
-        <button class="filter-btn active" data-filter="none">Color</button>
+        <button class="filter-btn active" data-filter="none">color</button>
         <button class="filter-btn" data-filter="grayscale">B&amp;W</button>
-        <button class="filter-btn" data-filter="sepia">Sepia</button>
-        <button class="filter-btn" data-filter="vivid">Vivid</button>
-        <button class="filter-btn" data-filter="cool">Cool</button>
+        <button class="filter-btn" data-filter="sepia">sepia</button>
+        <button class="filter-btn" data-filter="vivid">vivid</button>
+        <button class="filter-btn" data-filter="cool">cool</button>
       </div>
 
       <!-- Action buttons -->
       <div class="controls">
         <button class="btn-shoot" id="shoot-btn" disabled>
-          📷 Take photo
+          take photo 📷
         </button>
         <button class="btn-retake" id="retake-btn" style="display:none">
-          ↩ Retake last
+          ↩ retake last photo
         </button>
       </div>
 
-      <p class="status" id="status">Allow camera access to get started.</p>
+      <p class="status" id="status">allow camera access to get started.</p>
       <p class="shot-count" id="shot-count"></p>
 
       <!-- Download + Print (shown after 4 shots) -->
       <div class="post-controls" id="post-controls" style="display:none">
-        <button class="btn-download" id="dl-btn">⬇ Download strip</button>
-        <button class="btn-print" id="print-btn">🖨 Print</button>
-        <button class="btn-reset" id="reset-btn">↺ Start over</button>
+        <button class="btn-download" id="dl-btn">⬇ download strip</button>
+        <button class="btn-print" id="print-btn">🖨 print</button>
+        <button class="btn-reset" id="reset-btn">↺ start over</button>
       </div>
 
     </section>

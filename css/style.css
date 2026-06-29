@@ -33,7 +33,7 @@ body {
 }
 
 /* ─── Camera section ────────────────────────────────────── */
-.cam-section { flex: 0 0 340px; min-width: 240px; }
+.cam-section { flex: 0 0 340px; min-width: 400px; }
 
 .cam-wrap {
   position: relative;
