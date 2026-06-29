@@ -296,6 +296,6 @@ video, #preview-canvas {
 .date-toggle input { cursor: pointer; }
 
 /* ─── Grid wide mode ─────────────────────────────────────── */
-.layout.grid-mode { max-width: 1400px; }
+.layout.grid-mode { max-width: 800px; }
 .layout.grid-mode .cam-section { flex: 0 0 340px; }
-.layout.grid-mode .strip-section { flex: 1 1 auto; min-width: 480px; }
+.layout.grid-mode .strip-section { flex: 1 1 auto; min-width: 300px; max-width: 480px; }
