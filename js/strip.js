@@ -4,42 +4,42 @@
 
 const LAYOUTS = {
   classic: {
-    label: 'Classic 4',
+    label: 'classic',
     photoCount: 4,
-    stripW: 240, stripH: 760,
-    frameW: 216, frameH: 162,
+    stripW: 480, stripH: 1520,
+    frameW: 432, frameH: 324,
     photos: [
-      { x: 12, y: 12  },
-      { x: 12, y: 186 },
-      { x: 12, y: 360 },
-      { x: 12, y: 534 },
+      { x: 24, y: 24  },
+      { x: 24, y: 372 },
+      { x: 24, y: 720 },
+      { x: 24, y: 1068 },
     ],
-    footerY: 870,
+    footerY: 1480,
   },
   short: {
-    label: 'Short 3',
+    label: 'short',
     photoCount: 3,
-    stripW: 240, stripH: 600,
-    frameW: 216, frameH: 162,
+    stripW: 480, stripH: 1140,
+    frameW: 432, frameH: 324,
     photos: [
-      { x: 12, y: 12  },
-      { x: 12, y: 186 },
-      { x: 12, y: 360 },
+      { x: 24, y: 24  },
+      { x: 24, y: 372 },
+      { x: 24, y: 720 },
     ],
-    footerY: 660,
+    footerY: 1100,
   },
   polaroid: {
-    label: 'Polaroid',
+    label: 'polaroid',
     photoCount: 1,
-    stripW: 300, stripH: 280,
-    frameW: 260, frameH: 195,
+    stripW: 600, stripH: 560,
+    frameW: 520, frameH: 390,
     photos: [
-      { x: 20, y: 20 },
+      { x: 40, y: 40 },
     ],
-    footerY: 348,
+    footerY: 510,
   },
   grid: {
-    label: 'Grid 2×2',
+    label: 'grid',
     photoCount: 4,
     stripW: 970, stripH: 760,
     frameW: 444, frameH: 332,
@@ -49,7 +49,7 @@ const LAYOUTS = {
       { x: 24,  y: 400 },
       { x: 500, y: 400 },
     ],
-    footerY: 964,
+    footerY: 720,
   },
 };
 
@@ -79,6 +79,7 @@ function renderStrip(shots) {
       ctx.drawImage(shots[i], pos.x, pos.y, l.frameW, l.frameH);
     } else {
       // Placeholder box
+      ctx.save();
       const isDark = isColorDark(stripColor);
       ctx.fillStyle = isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
       ctx.fillRect(pos.x, pos.y, l.frameW, l.frameH);
@@ -87,16 +88,17 @@ function renderStrip(shots) {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(`Photo ${i + 1}`, pos.x + l.frameW / 2, pos.y + l.frameH / 2);
+      ctx.restore();
     }
   });
 
   // Text stamp (not shown for grid)
   if (stampText && activeLayout !== 'grid') {
     const isDark = isColorDark(stripColor);
-    ctx.fillStyle = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.4)';
-    ctx.font = 'italic 13px Georgia, serif';
+    ctx.fillStyle = isDark ? '#ffffff' : '#000000';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    ctx.font = 'italic 36px monospace';
     ctx.fillText(stampText, l.stripW / 2, l.footerY);
   }
 }

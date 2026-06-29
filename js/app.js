@@ -73,7 +73,7 @@ document.querySelectorAll('.layout-btn').forEach(btn => {
  * @returns {HTMLCanvasElement}
  */
 function captureFrame() {
-  const CAP_W = 640, CAP_H = 480; // always capture 4:3
+  const CAP_W = 1280, CAP_H = 960; // always capture 4:3
   const c   = document.createElement('canvas');
   c.width   = CAP_W;
   c.height  = CAP_H;
