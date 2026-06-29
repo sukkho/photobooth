@@ -61,6 +61,7 @@ document.querySelectorAll('.layout-btn').forEach(btn => {
     updateUI();
     // toggle wide layout for grid
     document.querySelector('.layout').classList.toggle('grid-mode', btn.dataset.layout === 'grid');
+    document.getElementById('text-stamp-wrap').style.display = btn.dataset.layout === 'grid' ? 'none' : 'block';
   });
 });
 
@@ -153,6 +154,9 @@ resetBtn.addEventListener('click', () => {
   document.getElementById('layout-picker').style.display = 'block';
   document.getElementById('strip-editor').style.display = 'none';
   document.querySelector('.layout').classList.remove('grid-mode');
+  document.getElementById('stamp-text').value = '';
+  setStampText('');
+  document.getElementById('text-stamp-wrap').style.display = 'block';
 });
 
 // ─── UI state sync ─────────────────────────────────────────
@@ -182,7 +186,7 @@ function updateUI() {
   postControls.style.display = done ? 'flex' : 'none';
 
   document.getElementById('layout-picker').style.display = shots.length > 0 ? 'none' : 'block';
-  document.getElementById('strip-editor').style.display  = done ? 'block' : 'none';
+  document.getElementById('strip-editor').style.display  = shots.length > 0 ? 'block' : 'none';
 }
 
 function setStatus(msg) {
@@ -207,9 +211,9 @@ document.getElementById('color-picker').addEventListener('input', (e) => {
   renderStrip(shots);
 });
 
-// Date stamp toggle
-document.getElementById('date-toggle').addEventListener('change', (e) => {
-  setShowDate(e.target.checked);
+// Text stamp 
+document.getElementById('stamp-text').addEventListener('input', (e) => {
+  setStampText(e.target.value);
   renderStrip(shots);
 });
 

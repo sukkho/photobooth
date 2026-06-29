@@ -55,7 +55,7 @@ const LAYOUTS = {
 
 let activeLayout = 'classic';
 let stripColor   = '#111111';
-let showDate     = false;
+let stampText = ''
 
 const stripCanvas = document.getElementById('strip-canvas');
 
@@ -90,17 +90,14 @@ function renderStrip(shots) {
     }
   });
 
-  // Date stamp
-  if (showDate) {
-    const dateStr = new Date().toLocaleDateString('en-GB', {
-      day: '2-digit', month: 'short', year: 'numeric'
-    }).toUpperCase();
+  // Text stamp (not shown for grid)
+  if (stampText && activeLayout !== 'grid') {
     const isDark = isColorDark(stripColor);
     ctx.fillStyle = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.4)';
-    ctx.font = 'italic 11px monospace';
+    ctx.font = 'italic 13px Georgia, serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(dateStr, l.stripW / 2, l.footerY);
+    ctx.fillText(stampText, l.stripW / 2, l.footerY);
   }
 }
 
@@ -121,8 +118,8 @@ function setStripColor(color) {
   stripColor = color;
 }
 
-function setShowDate(val) {
-  showDate = val;
+function setStampText(val) {
+  stampText = val;
 }
 
 function downloadStrip() {

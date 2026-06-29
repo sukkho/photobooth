@@ -282,15 +282,20 @@ video, #preview-canvas {
   border-color: #1a1a1a;
 }
 
-/* ─── Date toggle ────────────────────────────────────────── */
-.date-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #444;
-  cursor: pointer;
-  margin-top: 0.25rem;
+/* ─── Text stamp ────────────────────────────────────────── */
+#stamp-text {
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 8px;
+    border: 1px solid #d5d5d3;
+    font-size: 13px;
+    color: #333;
+    margin-top: 4px;
+}
+
+#stamp-text:focus {
+    outline: none;
+    border-color: #999;
 }
 
 .date-toggle input { cursor: pointer; }
