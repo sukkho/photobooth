@@ -6,7 +6,7 @@ const LAYOUTS = {
   classic: {
     label: 'Classic 4',
     photoCount: 4,
-    stripW: 240, stripH: 908,
+    stripW: 240, stripH: 760,
     frameW: 216, frameH: 162,
     photos: [
       { x: 12, y: 12  },
@@ -19,7 +19,7 @@ const LAYOUTS = {
   short: {
     label: 'Short 3',
     photoCount: 3,
-    stripW: 240, stripH: 690,
+    stripW: 240, stripH: 600,
     frameW: 216, frameH: 162,
     photos: [
       { x: 12, y: 12  },
@@ -31,8 +31,8 @@ const LAYOUTS = {
   polaroid: {
     label: 'Polaroid',
     photoCount: 1,
-    stripW: 300, stripH: 380,
-    frameW: 260, frameH: 260,
+    stripW: 300, stripH: 280,
+    frameW: 260, frameH: 195,
     photos: [
       { x: 20, y: 20 },
     ],
@@ -41,15 +41,15 @@ const LAYOUTS = {
   grid: {
     label: 'Grid 2×2',
     photoCount: 4,
-    stripW: 480, stripH: 504,
-    frameW: 222, frameH: 222,
+    stripW: 970, stripH: 760,
+    frameW: 444, frameH: 332,
     photos: [
-      { x: 12,  y: 12  },
-      { x: 246, y: 12  },
-      { x: 12,  y: 246 },
-      { x: 246, y: 246 },
+      { x: 24,  y: 24  },
+      { x: 500, y: 24  },
+      { x: 24,  y: 400 },
+      { x: 500, y: 400 },
     ],
-    footerY: 482,
+    footerY: 964,
   },
 };
 

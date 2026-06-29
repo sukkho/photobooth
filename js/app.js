@@ -21,13 +21,13 @@ const postControls = document.getElementById('post-controls');
 let shots        = [];        // array of captured frame canvases (max 4)
 let activeFilter = 'none';
 let isShooting   = false;
-const MAX_SHOTS  = 4;let MAX_SHOTS = LAYOUTS[activeLayout].photoCount;
+let MAX_SHOTS = LAYOUTS[activeLayout].photoCount;
 
 // ─── Camera setup ──────────────────────────────────────────
 async function startCamera() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 960 } },
+      video: { facingMode: 'user', width: { ideal: 1920 }, height: { ideal: 1080 } },
       audio: false,
     });
     video.srcObject = stream;
@@ -70,20 +70,21 @@ document.querySelectorAll('.layout-btn').forEach(btn => {
  * @returns {HTMLCanvasElement}
  */
 function captureFrame() {
+  const l   = LAYOUTS[activeLayout];
   const c   = document.createElement('canvas');
-  c.width   = FRAME_W;
-  c.height  = FRAME_H;
+  c.width   = l.frameW;
+  c.height  = l.frameH;
   const ctx = c.getContext('2d');
 
   // Mirror horizontally (selfie feel)
   ctx.save();
-  ctx.translate(FRAME_W, 0);
+  ctx.translate(l.frameW, 0);
   ctx.scale(-1, 1);
-  ctx.drawImage(video, 0, 0, FRAME_W, FRAME_H);
+  ctx.drawImage(video, 0, 0, l.frameW, l.frameH);
   ctx.restore();
 
   // Apply pixel filter
-  applyFilter(ctx, FRAME_W, FRAME_H, activeFilter);
+  applyFilter(ctx, l.frameW, l.frameH, activeFilter);
   return c;
 }
 
