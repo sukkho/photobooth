@@ -1,0 +1,218 @@
+/* ─── Reset & base ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f5f3;
+  color: #1a1a1a;
+  min-height: 100vh;
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e3;
+}
+
+.logo   { font-size: 18px; font-weight: 600; }
+.subtitle { font-size: 13px; color: #888; }
+
+/* ─── Layout ────────────────────────────────────────────── */
+.layout {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* ─── Camera section ────────────────────────────────────── */
+.cam-section { flex: 0 0 340px; min-width: 240px; }
+
+.cam-wrap {
+  position: relative;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+video, #preview-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#preview-canvas { display: none; }
+
+/* Flash overlay */
+.flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.05s;
+}
+.flash.on { opacity: 1; }
+
+/* Countdown */
+.countdown {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* ─── Filters ────────────────────────────────────────────── */
+.filter-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 0.875rem;
+}
+
+.filter-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #d5d5d3;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.filter-btn:hover { background: #f0f0ee; border-color: #bbb; }
+
+.filter-btn.active {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+/* ─── Controls ───────────────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 0.875rem;
+}
+
+.btn-shoot {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn-shoot:hover:not(:disabled) { opacity: 0.82; }
+.btn-shoot:disabled { opacity: 0.35; cursor: default; }
+
+.btn-retake {
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #d5d5d3;
+  font-size: 14px;
+  cursor: pointer;
+  color: #444;
+  transition: background 0.12s;
+}
+.btn-retake:hover { background: #f5f5f3; }
+
+/* Status */
+.status { font-size: 12px; color: #888; margin-top: 8px; min-height: 18px; }
+.shot-count { font-size: 13px; color: #555; margin-top: 4px; min-height: 20px; }
+
+/* Post-controls */
+.post-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 0.875rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid #e5e5e3;
+}
+
+.btn-download, .btn-print, .btn-reset {
+  flex: 1 1 auto;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s;
+  border: 1px solid #d5d5d3;
+}
+
+.btn-download {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+.btn-download:hover { opacity: 0.82; }
+
+.btn-print, .btn-reset {
+  background: #fff;
+  color: #444;
+}
+.btn-print:hover, .btn-reset:hover { background: #f5f5f3; }
+
+/* ─── Strip section ──────────────────────────────────────── */
+.strip-section { flex: 1 1 auto; }
+
+.strip-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+#strip-canvas {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+  border: 1px solid #e0e0de;
+}
+
+/* ─── Print styles ───────────────────────────────────────── */
+@media print {
+  body * { visibility: hidden; }
+  #strip-canvas, #strip-canvas * { visibility: visible; }
+  #strip-canvas {
+    position: fixed;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 2in;
+    border: none;
+  }
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .layout { flex-direction: column; padding: 1rem; gap: 1rem; }
+  .cam-section { flex: 0 0 auto; width: 100%; }
+  .strip-section { width: 100%; }
+  .countdown { font-size: 56px; }
+}
